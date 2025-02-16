@@ -46,18 +46,17 @@ export default function Page() {
           <CardContent>
             <form onSubmit={createLobby} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="createUsername">Dein Benutzername</Label>
+                <Label htmlFor="createUsername">Benutzername</Label>
                 <Input
                   type="text"
                   id="createUsername"
                   value={createUsername}
                   onChange={(e) => setCreateUsername(e.target.value)}
-                  placeholder="Gib deinen Benutzernamen ein"
                   required
                 />
               </div>
               <Button type="submit" className="w-full">
-                <Plus className="mr-2 h-4 w-4" /> Lobby erstellen
+                <Plus className="mr-2 h-4 w-4" /> Spiel erstellen
               </Button>
             </form>
           </CardContent>
@@ -65,19 +64,18 @@ export default function Page() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Bestehender Lobby beitreten</CardTitle>
-            <CardDescription>Gib einen Lobby-Code ein, um einem bestehenden Wolfwer-Spiel beizutreten</CardDescription>
+            <CardTitle>Spiel beitreten</CardTitle>
+            <CardDescription>Gib den Lobby-Code ein, um einem bestehenden Wolfwer-Spiel beizutreten</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={joinLobby} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="joinUsername">Dein Benutzername</Label>
+                <Label htmlFor="joinUsername">Benutzername</Label>
                 <Input
                   type="text"
                   id="joinUsername"
                   value={joinUsername}
                   onChange={(e) => setJoinUsername(e.target.value)}
-                  placeholder="Gib deinen Benutzernamen ein"
                   required
                 />
               </div>
@@ -88,7 +86,6 @@ export default function Page() {
                   id="lobbyCode"
                   value={joinLobbyCode}
                   onChange={(e) => setJoinLobbyCode(e.target.value)}
-                  placeholder="Gib den Lobby-Code ein"
                   required
                 />
               </div>
