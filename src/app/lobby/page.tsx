@@ -55,8 +55,8 @@ export default function Page() {
     return () => clearInterval(interval)
   }, [])
 
-  const copyRoomCode = () => {
-    navigator.clipboard.writeText(roomCode)
+  const copyRoomCode = async () => {
+    await navigator.clipboard.writeText(roomCode)
     alert("Raumcode in die Zwischenablage kopiert!")
   }
 
@@ -190,7 +190,7 @@ export default function Page() {
                   max={60}
                   step={5}
                   value={[nightDuration]}
-                  onValueChange={(value) => setNightDuration(value[0])}
+                  onValueChange={(value) => setNightDuration(value[0] ?? 30)}
                   disabled={!isCreator}
                 />
                 <p className="text-sm text-muted-foreground">Aktuell: {nightDuration} Sekunden</p>
