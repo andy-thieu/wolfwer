@@ -1,37 +1,105 @@
-import Link from "next/link";
+"use client"
 
-export default function HomePage() {
+import type React from "react"
+
+import { useState } from "react"
+import { Button } from "~/components/ui/button"
+import { Input } from "~/components/ui/input"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
+import { Label } from "~/components/ui/label"
+import { Plus, LogIn } from "lucide-react"
+
+export default function Page() {
+  const [createUsername, setCreateUsername] = useState("")
+  const [joinLobbyCode, setJoinLobbyCode] = useState("")
+  const [joinUsername, setJoinUsername] = useState("")
+
+  const createLobby = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (createUsername.trim()) {
+      console.log(`Lobby erstellt mit Benutzername: ${createUsername}`)
+      setCreateUsername("")
+    }
+  }
+
+  const joinLobby = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (joinLobbyCode.trim() && joinUsername.trim()) {
+      console.log(`Lobby beigetreten mit Code: ${joinLobbyCode} und Benutzername: ${joinUsername}`)
+      setJoinLobbyCode("")
+      setJoinUsername("")
+    }
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
-        </div>
+    <div className="container mx-auto p-4">
+      <div className="flex items-center justify-center mb-8">
+        <h1 className="text-4xl font-bold ml-4">Wolfwer</h1>
       </div>
-    </main>
-  );
+
+      <div className="grid gap-8 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Neue Lobby erstellen</CardTitle>
+            <CardDescription>Starte ein neues Wolfwer-Spiel</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={createLobby} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="createUsername">Dein Benutzername</Label>
+                <Input
+                  type="text"
+                  id="createUsername"
+                  value={createUsername}
+                  onChange={(e) => setCreateUsername(e.target.value)}
+                  placeholder="Gib deinen Benutzernamen ein"
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full">
+                <Plus className="mr-2 h-4 w-4" /> Lobby erstellen
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Bestehender Lobby beitreten</CardTitle>
+            <CardDescription>Gib einen Lobby-Code ein, um einem bestehenden Wolfwer-Spiel beizutreten</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={joinLobby} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="joinUsername">Dein Benutzername</Label>
+                <Input
+                  type="text"
+                  id="joinUsername"
+                  value={joinUsername}
+                  onChange={(e) => setJoinUsername(e.target.value)}
+                  placeholder="Gib deinen Benutzernamen ein"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lobbyCode">Lobby-Code</Label>
+                <Input
+                  type="text"
+                  id="lobbyCode"
+                  value={joinLobbyCode}
+                  onChange={(e) => setJoinLobbyCode(e.target.value)}
+                  placeholder="Gib den Lobby-Code ein"
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full">
+                <LogIn className="mr-2 h-4 w-4" /> Lobby beitreten
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
 }
+
