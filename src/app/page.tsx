@@ -85,6 +85,7 @@ export default function Page() {
                   type="text"
                   id="lobbyCode"
                   value={joinLobbyCode}
+                  placeholder={'z.B. "KLXNTW"'}
                   onChange={(e) => setJoinLobbyCode(e.target.value)}
                   required
                 />
