@@ -95,7 +95,7 @@ export default function Page() {
   };
 
   const isCreator = players.find(
-    (player) => player.id === players[0].id,
+    (player) => player.id === players[0]?.id,
   )?.isCreator;
 
   return (
