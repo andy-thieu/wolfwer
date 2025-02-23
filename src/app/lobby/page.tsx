@@ -15,76 +15,71 @@ import {
 } from "~/components/ui/select";
 import { Users, Copy, X } from "lucide-react";
 
+import { useRouter, useSearchParams } from "next/navigation";
+
 interface Player {
   id: string;
   name: string;
   isCreator: boolean;
 }
 
+interface Role {
+  name: string;
+  count: number;
+  maxCount: number;
+}
+
 const initialPlayers: Player[] = [
-  { id: "1", name: "Spieler 1", isCreator: true },
-  { id: "2", name: "Spieler 2", isCreator: false },
-  { id: "3", name: "Spieler 3", isCreator: false },
+  { id: "1", name: "Devin", isCreator: true },
+  { id: "2", name: "Vero", isCreator: false },
+  { id: "3", name: "minendie", isCreator: false },
+  { id: "4", name: "Michi", isCreator: false },
+  { id: "4", name: "Raphi", isCreator: false },
+  { id: "4", name: "Mochigiri", isCreator: false },
+  { id: "5", name: "endi", isCreator: false },
 ];
 
-const initialRoles = [
-  { name: "Werwölfe", enabled: true, count: 2 },
-  { name: "Dorfbewohner", enabled: true, count: 3 },
-  { name: "Seherin", enabled: true, count: 1 },
-  { name: "Hexe", enabled: true, count: 1 },
-  { name: "Jäger", enabled: false, count: 1 },
-  { name: "Amor", enabled: false, count: 1 },
-  { name: "Beschützer", enabled: false, count: 1 },
-  { name: "Bürgermeister", enabled: false, count: 1 },
+const initialRoles: Role[] = [
+  { name: "Werwölfe", count: 2, maxCount: 3 },
+  { name: "Dorfbewohner", count: 3, maxCount: 7 },
+  { name: "Seherin", count: 1, maxCount: 1 },
+  { name: "Hexe", count: 1, maxCount: 1 },
+  { name: "Jäger", count: 1, maxCount: 1 },
+  { name: "Amor", count: 1, maxCount: 1 },
+  { name: "Beschützer", count: 1, maxCount: 1 },
+  { name: "Bürgermeister", count: 1, maxCount: 1 },
 ];
 
 export default function Page() {
   const [players, setPlayers] = useState<Player[]>(initialPlayers);
-  const [roomCode, setRoomCode] = useState("ABCD1234");
   const [nightDuration, setNightDuration] = useState(30);
   const [roles, setRoles] = useState(initialRoles);
   const [seerSeeRole, setSeerSeeRole] = useState("alignment");
   const [revealRoleOnDeath, setRevealRoleOnDeath] = useState(false);
-  const [currentPlayerId, setCurrentPlayerId] = useState("1"); // Assuming the current player is the creator for this example
+  const [currentPlayerId, setCurrentPlayerId] = useState("1");
+  const router = useRouter();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPlayers((prevPlayers) => {
-        if (prevPlayers.length < 10) {
-          const newPlayerId = (prevPlayers.length + 1).toString();
-          return [
-            ...prevPlayers,
-            {
-              id: newPlayerId,
-              name: `Spieler ${newPlayerId}`,
-              isCreator: false,
-            },
-          ];
-        }
-        return prevPlayers;
-      });
-    }, 5000);
+  const searchParams = useSearchParams();
 
-    return () => clearInterval(interval);
-  }, []);
+  const roomCode = searchParams.get("code");
+
+  if (!roomCode) return <div>Loading...</div>;
 
   const copyRoomCode = async () => {
     await navigator.clipboard.writeText(roomCode);
-    alert("Raumcode in die Zwischenablage kopiert!");
-  };
 
-  const toggleRole = (index: number) => {
-    setRoles((prevRoles) =>
-      prevRoles.map((role, i) =>
-        i === index ? { ...role, enabled: !role.enabled } : role,
-      ),
-    );
+    alert("Raumcode in die Zwischenablage kopiert!");
   };
 
   const updateRoleCount = (index: number, newCount: number) => {
     setRoles((prevRoles) =>
       prevRoles.map((role, i) =>
-        i === index ? { ...role, count: newCount } : role,
+        i === index
+          ? {
+              ...role,
+              count: Math.max(0, Math.min(role.maxCount, newCount)),
+            }
+          : role,
       ),
     );
   };
@@ -96,8 +91,8 @@ export default function Page() {
   };
 
   const leaveRoom = () => {
-    // In a real application, this would trigger an API call to leave the room
     alert("Du hast die Lobby verlassen.");
+    router.push("/");
   };
 
   const isCreator = players.find(
@@ -118,28 +113,29 @@ export default function Page() {
           </CardHeader>
           <CardContent>
             <div className={"flex h-full flex-col justify-between"}>
-              <ul className="space-y-2">
-                {players.map((player) => (
-                  <li
-                    key={player.id}
-                    className="flex items-center justify-between rounded bg-secondary p-2"
-                  >
-                    <span>
-                      {player.name} {player.isCreator ? "(Ersteller)" : ""}
-                    </span>
-                    {isCreator && !player.isCreator && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => removePlayer(player.id)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </li>
-                ))}
-              </ul>
-
+              <div className={"h-full flex-1 overflow-y-auto"}>
+                <ul className="space-y-2">
+                  {players.map((player) => (
+                    <li
+                      key={player.id}
+                      className="flex items-center justify-between rounded bg-secondary p-2"
+                    >
+                      <span>
+                        {player.name} {player.isCreator ? "(Ersteller)" : ""}
+                      </span>
+                      {isCreator && !player.isCreator && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => removePlayer(player.id)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
               <Button
                 className="mt-4 w-full"
                 variant="destructive"
@@ -171,7 +167,7 @@ export default function Page() {
               <CardTitle>Spieleinstellungen</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex flex-row">
+              <div className="flex flex-col space-y-6 lg:flex-row lg:space-y-0">
                 <div className={"flex-1 space-y-4"}>
                   <Label>Rollen</Label>
                   {roles.map((role, index) => (
