@@ -14,6 +14,9 @@ import {
 import { Label } from "~/components/ui/label";
 import { Plus, LogIn } from "lucide-react";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 function generateGameCode(): string {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let code = "";
@@ -25,6 +28,22 @@ function generateGameCode(): string {
 }
 
 export default function Page() {
+  const [username, setUsername] = useState("");
+  const [lobbyCode, setLobbyCode] = useState("");
+  const router = useRouter();
+  const handleCreateGame = (e: React.FormEvent) => {
+    e.preventDefault();
+    const code = generateGameCode();
+    router.push(`/lobby?code=${code}`);
+  };
+
+  const handleJoinGame = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (lobbyCode && username) {
+      router.push(`/lobby?code=${lobbyCode}`);
+    }
+  };
+
   return (
     <div className={"flex h-dvh w-dvw items-center justify-center"}>
       <div className="p-4">
@@ -35,13 +54,13 @@ export default function Page() {
               <CardDescription>Starte ein neues Wolfwer-Spiel</CardDescription>
             </CardHeader>
             <CardContent>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleCreateGame}>
                 <div className="space-y-2">
                   <Label htmlFor="createUsername">Benutzername</Label>
                   <Input type="text" id="createUsername" required />
                 </div>
                 <Button type="submit" className="w-full">
-                  <Plus className="mr-2 h-4 w-4" /> Spiel erstellen
+                  <Plus className="mr-2 h-4 w-4" /> <span>Spiel erstellen</span>
                 </Button>
               </form>
             </CardContent>
@@ -56,7 +75,7 @@ export default function Page() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleJoinGame}>
                 <div className="space-y-2">
                   <Label htmlFor="joinUsername">Benutzername</Label>
                   <Input type="text" id="joinUsername" required />
