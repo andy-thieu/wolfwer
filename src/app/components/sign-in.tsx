@@ -15,11 +15,14 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { authClient } from "~/lib/auth-client";
 import Link from "next/link";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   return (
     <Card className="min-w-96 max-w-md rounded-none">
@@ -32,16 +35,16 @@ export default function SignIn() {
       <CardContent>
         <div className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="username">Benutzername</Label>
             <Input
-              id="email"
-              type="email"
-              placeholder="endidi@example.com"
+              id="username"
+              type="username"
+              placeholder="endidi"
               required
               onChange={(e) => {
-                setEmail(e.target.value);
+                setUsername(e.target.value);
               }}
-              value={email}
+              value={username}
             />
           </div>
 
@@ -53,7 +56,6 @@ export default function SignIn() {
             <Input
               id="password"
               type="password"
-              placeholder="Passwort"
               autoComplete="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -65,7 +67,24 @@ export default function SignIn() {
             className="w-full"
             disabled={loading}
             onClick={async () => {
-              await authClient.signIn.email({ email, password });
+              await authClient.signIn.username({
+                username,
+                password,
+                fetchOptions: {
+                  onRequest: () => {
+                    setLoading(true);
+                  },
+                  onResponse: () => {
+                    setLoading(false);
+                  },
+                  onError: (ctx) => {
+                    toast.error(ctx.error.message);
+                  },
+                  onSuccess: async () => {
+                    router.push("/join");
+                  },
+                },
+              });
             }}
           >
             {loading ? (

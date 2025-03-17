@@ -13,13 +13,13 @@ export const createTable = pgTableCreator((name) => `wolfwer_${name}`);
 
 export const user = createTable("user", {
   id: text("id").primaryKey(),
-  name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").notNull(),
   image: text("image"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
-  username: text("username").unique(),
+  username: text("username").unique().notNull(),
+  name: text("name").notNull(),
 });
 
 export const session = createTable("session", {

@@ -69,7 +69,6 @@ export function SignUp() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="new-password"
-              placeholder="Passwort"
             />
           </div>
           <div className="grid gap-2">
@@ -80,7 +79,6 @@ export function SignUp() {
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}
               autoComplete="new-password"
-              placeholder="Passwort bestätigen"
             />
           </div>
 
@@ -93,7 +91,7 @@ export function SignUp() {
                 email,
                 password,
                 name: `${username}`,
-                callbackURL: "/dashboard",
+                username: `${username}`,
                 fetchOptions: {
                   onResponse: () => {
                     setLoading(false);
@@ -102,10 +100,10 @@ export function SignUp() {
                     setLoading(true);
                   },
                   onError: (ctx) => {
-                    toast.error(ctx.error.message);
+                    toast(ctx.error.message);
                   },
                   onSuccess: async () => {
-                    router.push("/dashboard");
+                    router.push("/join");
                   },
                 },
               });
@@ -135,13 +133,4 @@ export function SignUp() {
       </CardFooter>
     </Card>
   );
-}
-
-async function convertImageToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
 }
