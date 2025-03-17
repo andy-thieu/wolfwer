@@ -23,7 +23,7 @@ interface GameSettingsProps {
   isCreator: boolean;
 }
 
-export function GameSettings({ isCreator }: GameSettingsProps) {
+export function GameSettings(props: GameSettingsProps) {
   const [roles, setRoles] = useState(mockRoles);
   const [seerSeeRole, setSeerSeeRole] = useState("alignment");
   const [revealRoleOnDeath, setRevealRoleOnDeath] = useState(false);
@@ -59,7 +59,7 @@ export function GameSettings({ isCreator }: GameSettingsProps) {
                 <Switch
                   checked={role.enabled}
                   onCheckedChange={() => toggleRole(index)}
-                  disabled={!isCreator}
+                  disabled={!props.isCreator}
                 />
                 <Label>{role.name}</Label>
               </div>
@@ -71,7 +71,7 @@ export function GameSettings({ isCreator }: GameSettingsProps) {
                     onClick={() =>
                       updateRoleCount(index, Math.max(1, role.count - 1))
                     }
-                    disabled={!isCreator}
+                    disabled={!props.isCreator}
                   >
                     -
                   </Button>
@@ -80,7 +80,7 @@ export function GameSettings({ isCreator }: GameSettingsProps) {
                     variant="outline"
                     size="icon"
                     onClick={() => updateRoleCount(index, role.count + 1)}
-                    disabled={!isCreator}
+                    disabled={!props.isCreator}
                   >
                     +
                   </Button>
@@ -94,7 +94,7 @@ export function GameSettings({ isCreator }: GameSettingsProps) {
           <Select
             value={seerSeeRole}
             onValueChange={setSeerSeeRole}
-            disabled={!isCreator}
+            disabled={!props.isCreator}
           >
             <SelectTrigger>
               <SelectValue placeholder="Wähle eine Option" />
@@ -111,7 +111,7 @@ export function GameSettings({ isCreator }: GameSettingsProps) {
           <Switch
             checked={revealRoleOnDeath}
             onCheckedChange={setRevealRoleOnDeath}
-            disabled={!isCreator}
+            disabled={!props.isCreator}
           />
           <Label>Rolle bei Tod aufdecken</Label>
         </div>
@@ -124,13 +124,13 @@ export function GameSettings({ isCreator }: GameSettingsProps) {
             step={5}
             value={[nightDuration]}
             onValueChange={(value) => setNightDuration(value[0] ?? 30)}
-            disabled={!isCreator}
+            disabled={!props.isCreator}
           />
           <p className="text-sm text-muted-foreground">
             Aktuell: {nightDuration} Sekunden
           </p>
         </div>
-        <Button className="w-full" disabled={!isCreator}>
+        <Button className="w-full" disabled={!props.isCreator}>
           Spiel starten
         </Button>
       </CardContent>
