@@ -85,7 +85,13 @@ export function SignUp() {
           <Button
             type="submit"
             className="w-full"
-            disabled={loading}
+            disabled={
+              loading ||
+              username === "" ||
+              email === "" ||
+              password === "" ||
+              passwordConfirmation === ""
+            }
             onClick={async () => {
               await authClient.signUp.email({
                 email,

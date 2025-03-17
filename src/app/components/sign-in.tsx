@@ -18,6 +18,10 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
+const errorMessages: Record<string, string> = {
+  INVALID_USERNAME_OR_PASSWORD: "Benutzername oder Passwort ist falsch",
+};
+
 export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -65,7 +69,7 @@ export default function SignIn() {
           <Button
             type="submit"
             className="w-full"
-            disabled={loading}
+            disabled={loading || username === "" || password === ""}
             onClick={async () => {
               await authClient.signIn.username({
                 username,
@@ -78,7 +82,7 @@ export default function SignIn() {
                     setLoading(false);
                   },
                   onError: (ctx) => {
-                    toast.error(ctx.error.message);
+                    toast.error(errorMessages[ctx.error.code]);
                   },
                   onSuccess: async () => {
                     router.push("/join");
