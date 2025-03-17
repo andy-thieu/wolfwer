@@ -82,7 +82,9 @@ export default function SignIn() {
                     setLoading(false);
                   },
                   onError: (ctx) => {
-                    toast.error(errorMessages[ctx.error.code]);
+                    const errorCode = ctx.error
+                      .code as keyof typeof errorMessages;
+                    toast.error(errorMessages[errorCode]);
                   },
                   onSuccess: async () => {
                     router.push("/join");
