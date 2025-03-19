@@ -15,11 +15,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <html lang="en" className={`${GeistSans.variable}`}>
-        <body>{children}</body>
+    <html lang="en" className={`${GeistSans.variable}`}>
+      <body>
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
         <Toaster />
-      </html>
-    </Suspense>
+      </body>
+    </html>
   );
 }

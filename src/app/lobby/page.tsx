@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { PlayerList } from "~/app/components/player-list";
-import { RoomCode } from "~/app/components/room-code";
-import { GameSettings } from "~/app/components/game-settings";
+import { PlayerList } from "~/app/_components/player-list";
+import { RoomCode } from "~/app/_components/room-code";
+import { GameSettings } from "~/app/_components/game-settings";
 import { useSearchParams } from "next/navigation";
 
 export default function Page() {
