@@ -15,6 +15,7 @@ interface SignInUserData {
 interface SignUpUserData {
   username: string;
   password: string;
+  confirmPassword: string;
   email: string;
 }
 
@@ -33,6 +34,14 @@ interface SignUpButtonProps extends SubmitButtonBaseProps {
 }
 
 type SubmitButtonProps = SignInButtonProps | SignUpButtonProps;
+
+const errorMessages: Record<string, string> = {
+  INVALID_USERNAME_OR_PASSWORD: "Benutzername oder Passwort ist falsch",
+  USER_ALREADY_EXISTS: "Diese Email wird bereits verwendet",
+  USERNAME_IS_ALREADY_TAKEN_PLEASE_TRY_ANOTHER:
+    "Benutzername wird bereits verwendet, sorry :(",
+  INVALID_EMAIL: "Ungültige Email",
+};
 
 export function SubmitButton(props: SubmitButtonProps) {
   const router = useRouter();
@@ -53,7 +62,10 @@ export function SubmitButton(props: SubmitButtonProps) {
               router.push("/join");
             },
             onError: (ctx) => {
-              toast.error(ctx.error.message || "Anmeldung fehlgeschlagen");
+              const errorMessage =
+                errorMessages[ctx.error.code as keyof typeof errorMessages] ??
+                "Anmeldung fehlgeschlagen";
+              toast.error(errorMessage);
               setIsLoading(false);
             },
           },
@@ -68,6 +80,10 @@ export function SubmitButton(props: SubmitButtonProps) {
 
   const signUp = async () => {
     if (props.action === "signUp") {
+      if (props.userData.password !== props.userData.confirmPassword) {
+        toast.error("Passwörter stimmen nicht überein");
+        return;
+      }
       setIsLoading(true);
       try {
         await authClient.signUp.email(
@@ -83,7 +99,11 @@ export function SubmitButton(props: SubmitButtonProps) {
               router.push("/join");
             },
             onError: (ctx) => {
-              toast.error(ctx.error.message || "Registrierung fehlgeschlagen");
+              console.log(ctx.error);
+              const errorMessage =
+                errorMessages[ctx.error.code as keyof typeof errorMessages] ??
+                "Registrierung fehlgeschlagen";
+              toast.error(errorMessage);
               setIsLoading(false);
             },
           },

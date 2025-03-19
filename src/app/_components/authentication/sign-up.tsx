@@ -86,6 +86,7 @@ export function SignUp() {
                 username: username,
                 email: email,
                 password: password,
+                confirmPassword: passwordConfirmation,
               }}
             />
           </div>
