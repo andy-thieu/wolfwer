@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -9,9 +11,17 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import Link from "next/link";
-import { signIn } from "~/app/_actions/auth";
 import { SubmitButton } from "./submit-button";
+import { useState } from "react";
+
 export default function SignIn() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <Card className="min-w-96 max-w-md rounded-none">
       <CardHeader>
@@ -21,7 +31,7 @@ export default function SignIn() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form action={signIn}>
+        <form onSubmit={handleSubmit}>
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="username">Benutzername</Label>
@@ -31,6 +41,8 @@ export default function SignIn() {
                 type="username"
                 placeholder="endidi"
                 required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
 
@@ -44,10 +56,17 @@ export default function SignIn() {
                 name="password"
                 type="password"
                 autoComplete="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
 
-            <SubmitButton label="Anmelden" />
+            <SubmitButton
+              label="Anmelden"
+              action="signIn"
+              userData={{ username: username, password: password }}
+            />
           </div>
         </form>
       </CardContent>
