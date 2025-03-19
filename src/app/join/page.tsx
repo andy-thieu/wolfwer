@@ -11,16 +11,16 @@ export default async function Page() {
 
   return (
     <div className={"flex h-dvh w-dvw flex-col items-center justify-center"}>
-      <h1 className="mb-4 text-2xl font-bold">
-        {session ? "hi " + session.user.username + " !" : "not logged in"}
-      </h1>
-      <div className="p-4">
-        <div className="flex flex-col gap-4">
+      <div className="flex flex-col items-start gap-4">
+        <h1 className="mb-4 text-2xl font-bold">
+          {session ? "hi " + session.user.username + " !" : "not logged in"}
+        </h1>
+        <div className="flex max-w-[460px] flex-col gap-4">
           <CreateGameCard />
           <JoinGameCard />
         </div>
+        <SignOut />
       </div>
-      <SignOut />
     </div>
   );
 }
