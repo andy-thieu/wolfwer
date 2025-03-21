@@ -3,6 +3,7 @@ import { JoinGameCard } from "../_components/join-lobby/join-game-card";
 import { auth } from "~/lib/auth";
 import { headers } from "next/headers";
 import { SignOut } from "../_components/authentication/sign-out";
+import { Info } from "lucide-react";
 
 export default async function Page() {
   const session = await auth.api.getSession({
@@ -15,11 +16,15 @@ export default async function Page() {
         <h1 className="mb-4 text-2xl font-bold">
           {session ? "hi " + session.user.username + " !" : "not logged in"}
         </h1>
+
         <div className="flex max-w-[460px] flex-col gap-4">
           <CreateGameCard />
           <JoinGameCard />
         </div>
         <SignOut />
+        <p className="mt-4 flex items-center gap-2">
+          <Info /> this page is work in progress (wip)
+        </p>
       </div>
     </div>
   );

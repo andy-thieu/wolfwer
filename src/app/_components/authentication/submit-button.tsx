@@ -6,6 +6,7 @@ import { authClient } from "~/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { LogIn } from "lucide-react";
 
 interface SignInUserData {
   username: string;
@@ -132,7 +133,7 @@ export function SubmitButton(props: SubmitButtonProps) {
       onClick={handleClick}
       disabled={isLoading}
     >
-      {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+      {isLoading ? <Loader2 className="animate-spin" /> : <LogIn />}
       {props.label}
     </Button>
   );

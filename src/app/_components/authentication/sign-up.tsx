@@ -22,7 +22,7 @@ export function SignUp() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   return (
-    <Card className="z-50 min-w-96 max-w-md rounded-none">
+    <Card>
       <CardHeader>
         <CardTitle className="text-lg md:text-xl">Registrieren</CardTitle>
         <CardDescription className="text-xs md:text-sm">

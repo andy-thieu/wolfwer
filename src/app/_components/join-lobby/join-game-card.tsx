@@ -19,7 +19,7 @@ export function JoinGameCard() {
   };
 
   return (
-    <Card className="rounded-none">
+    <Card>
       <CardHeader>
         <CardTitle>Spiel beitreten</CardTitle>
         <CardDescription>
@@ -37,7 +37,7 @@ export function JoinGameCard() {
               required
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled>
             <LogIn className="mr-2 h-4 w-4" /> Lobby beitreten
           </Button>
         </form>

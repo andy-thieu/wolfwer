@@ -23,7 +23,7 @@ export default function SignIn() {
   };
 
   return (
-    <Card className="min-w-96 max-w-md rounded-none">
+    <Card>
       <CardHeader>
         <CardTitle className="text-lg md:text-xl">Anmelden</CardTitle>
         <CardDescription className="text-xs md:text-sm">
