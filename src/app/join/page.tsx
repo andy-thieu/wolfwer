@@ -11,7 +11,9 @@ export default async function Page() {
   });
 
   return (
-    <div className={"flex h-dvh w-dvw flex-col items-center justify-center"}>
+    <div
+      className={"flex h-dvh w-dvw flex-col items-center justify-center px-4"}
+    >
       <div className="flex flex-col items-start gap-4">
         <h1 className="mb-4 text-2xl font-bold">
           {session ? "hi " + session.user.username + " !" : "not logged in"}
