@@ -51,14 +51,12 @@ export const getLobby = async (code: string) => {
 };
 
 export const joinLobby = async (code: string, userId: string) => {
-  console.log("joining lobby", code, userId);
 
   const lobbyData = await db
     .select()
     .from(lobby)
     .innerJoin(user, eq(lobby.id, user.lobbyId))
     .where(eq(lobby.code, code));
-  console.log("lobbyData", lobbyData);
 
   if (!lobbyData[0]) {
     throw new Error("Lobby not found");

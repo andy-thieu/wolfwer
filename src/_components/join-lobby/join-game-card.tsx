@@ -19,17 +19,13 @@ interface JoinGameCardProps {
   currentUserId: string;
 }
 
-export async function JoinGameCard(props: JoinGameCardProps) {
+export function JoinGameCard(props: JoinGameCardProps) {
   const router = useRouter();
   const [lobbyCode, setLobbyCode] = useState("");
-  console.log("props", props);
 
   const handleJoinGame = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("handleJoinGame");
-    console.log("props.currentUserId", props.currentUserId);
     e.preventDefault();
     if (props.currentUserId) {
-      console.log("joining lobby");
       await joinLobby(lobbyCode, props.currentUserId);
       router.push(`/lobby/${lobbyCode}`);
     }
