@@ -14,10 +14,18 @@ export function PlayerList({
   lobbyData,
   currentUser,
 }: {
-  lobbyData: any;
+  lobbyData: {
+    user: {
+      username: string;
+      lobbyHost: boolean;
+    };
+  }[];
   currentUser: string;
 }) {
-  const playerNames = lobbyData.map((player: any) => player.user);
+  const playerNames = lobbyData.map((player) => ({
+    username: player.user.username,
+    lobbyHost: player.user.lobbyHost,
+  }));
   const [players, setPlayers] = useState<Player[]>(playerNames);
 
   return (

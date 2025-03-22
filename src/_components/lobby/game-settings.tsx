@@ -15,9 +15,20 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
+interface Role {
+  name: string;
+  description: string;
+  count: number;
+  maxCount: number;
+}
+
 interface GameSettingsProps {
   isCreator: boolean;
-  defaultSettings: any;
+  defaultSettings: {
+    roles: Role[];
+    seerCanSeeRole: string;
+    revealRoleOnDeath: boolean;
+  };
 }
 
 export function GameSettings(props: GameSettingsProps) {
@@ -38,8 +49,8 @@ export function GameSettings(props: GameSettingsProps) {
   const updateRoleCount = (index: number, newCount: number) => {
     if (roles[index] && newCount > roles[index].maxCount) return;
     if (newCount < 0) return;
-    setRoles((prevRoles: any) =>
-      prevRoles.map((role: any, i: number) =>
+    setRoles((prevRoles: Role[]) =>
+      prevRoles.map((role, i) =>
         i === index ? { ...role, count: newCount } : role,
       ),
     );
@@ -54,7 +65,7 @@ export function GameSettings(props: GameSettingsProps) {
         <div className="space-y-4">
           <Label>Rollen</Label>
           <div className="grid grid-cols-2 gap-2">
-            {roles.map((role: any, index: number) => (
+            {roles.map((role: Role, index: number) => (
               <div key={role.name} className="flex flex-row items-center gap-4">
                 <div className="flex flex-row items-center space-x-4">
                   <Button

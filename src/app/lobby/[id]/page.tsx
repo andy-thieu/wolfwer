@@ -13,6 +13,17 @@ interface PageProps {
   }>;
 }
 
+interface GameSettings {
+  roles: {
+    name: string;
+    description: string;
+    count: number;
+    maxCount: number;
+  }[];
+  seerCanSeeRole: string;
+  revealRoleOnDeath: boolean;
+}
+
 export default async function Page({ params }: PageProps) {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -36,7 +47,7 @@ export default async function Page({ params }: PageProps) {
       </div>
     );
 
-  const defaultSettings = JSON.parse(lobbyData[0].settings);
+  const defaultSettings = JSON.parse(lobbyData[0].settings) as GameSettings;
 
   return (
     <main className="container flex h-full h-screen w-full w-screen flex-col gap-4 p-4">
