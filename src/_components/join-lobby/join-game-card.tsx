@@ -11,11 +11,28 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { joinLobby } from "~/_actions/lobby";
 
-export function JoinGameCard() {
-  const handleJoinGame = (e: React.FormEvent<HTMLFormElement>) => {
+interface JoinGameCardProps {
+  currentUserId: string;
+}
+
+export async function JoinGameCard(props: JoinGameCardProps) {
+  const router = useRouter();
+  const [lobbyCode, setLobbyCode] = useState("");
+  console.log("props", props);
+
+  const handleJoinGame = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log("handleJoinGame");
+    console.log("props.currentUserId", props.currentUserId);
     e.preventDefault();
-    // Your existing handleJoinGame logic here
+    if (props.currentUserId) {
+      console.log("joining lobby");
+      await joinLobby(lobbyCode, props.currentUserId);
+      router.push(`/lobby/${lobbyCode}`);
+    }
   };
 
   return (
@@ -34,10 +51,11 @@ export function JoinGameCard() {
               type="text"
               id="lobbyCode"
               placeholder={'z.B. "KLXNTW"'}
+              onChange={(e) => setLobbyCode(e.target.value)}
               required
             />
           </div>
-          <Button type="submit" className="w-full" disabled>
+          <Button type="submit" className="w-full">
             <LogIn className="mr-2 h-4 w-4" /> Lobby beitreten
           </Button>
         </form>

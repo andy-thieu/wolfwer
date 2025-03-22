@@ -1,17 +1,21 @@
 export const mockRoles = [
-    { name: "Werwölfe", enabled: true, count: 2, maxCount: 2 },
-    { name: "Dorfbewohner", enabled: true, count: 3, maxCount: 4 },
-    { name: "Seherin", enabled: true, count: 1, maxCount: 1 },
-    { name: "Hexe", enabled: true, count: 1, maxCount: 1 },
-    { name: "Jäger", enabled: false, count: 1, maxCount: 1 },
-    { name: "Amor", enabled: false, count: 1, maxCount: 1 },
-    { name: "Beschützer", enabled: false, count: 1, maxCount: 1 },
-    { name: "Bürgermeister", enabled: false, count: 1, maxCount: 1 },
-  ]
+  { name: "werewolf", description: "Werwölfe", count: 0, maxCount: 2 },
+  { name: "villager", description: "Dorfbewohner", count: 0, maxCount: 4 },
+  { name: "seer", description: "Seherin", count: 0, maxCount: 1 },
+  { name: "witch", description: "Hexe", count: 0, maxCount: 1 },
+  { name: "hunter", description: "Jäger", count: 0, maxCount: 1 },
+  { name: "lover", description: "Amor", count: 0, maxCount: 1 },
+  { name: "protector", description: "Beschützer", count: 0, maxCount: 1 },
+  {
+    name: "mayor",
+    description: "Bürgermeister",
+    count: 0,
+    maxCount: 1,
+  },
+];
 
-export const mockPlayers = [
-    { id: "1", name: "endi", isCreator: true },
-    { id: "2", name: "vero", isCreator: false },
-    { id: "3", name: "minendie", isCreator: false },
-    { id: "4", name: "devin", isCreator: false },
-  ]
+export const mockSettings = {
+  revealRoleOnDeath: true,
+  seerCanSeeRole: true,
+  roles: mockRoles,
+};

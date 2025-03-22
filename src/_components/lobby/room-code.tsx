@@ -1,7 +1,9 @@
+"use client";
+
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Copy } from "lucide-react";
-
+import { toast } from "sonner";
 interface RoomCodeProps {
   roomCode: string;
 }
@@ -9,7 +11,7 @@ interface RoomCodeProps {
 export function RoomCode(props: RoomCodeProps) {
   const copyRoomCode = async () => {
     await navigator.clipboard.writeText(props.roomCode);
-    alert("Raumcode in die Zwischenablage kopiert!");
+    toast.success("Raumcode wurde kopiert!");
   };
 
   return (

@@ -1,14 +1,19 @@
-import { CreateGameCard } from "../_components/join-lobby/create-game-card";
-import { JoinGameCard } from "../_components/join-lobby/join-game-card";
+import { CreateGameCard } from "../../_components/join-lobby/create-game-card";
+import { JoinGameCard } from "../../_components/join-lobby/join-game-card";
 import { auth } from "~/lib/auth";
 import { headers } from "next/headers";
-import { SignOut } from "../_components/authentication/sign-out";
+import { SignOut } from "../../_components/authentication/sign-out";
 import { Info } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+
+  if (!session) {
+    redirect("/");
+  }
 
   return (
     <div
@@ -20,8 +25,8 @@ export default async function Page() {
         </h1>
 
         <div className="flex max-w-[460px] flex-col gap-4">
-          <CreateGameCard />
-          <JoinGameCard />
+          <CreateGameCard creatorId={session.user.id} />
+          <JoinGameCard currentUserId={session.user.id} />
         </div>
         <SignOut />
         <p className="mt-4 flex items-center gap-2">

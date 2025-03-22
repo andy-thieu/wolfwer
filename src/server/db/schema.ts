@@ -1,7 +1,13 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { pgTableCreator, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import {
+  pgTableCreator,
+  text,
+  timestamp,
+  boolean,
+  uuid,
+} from "drizzle-orm/pg-core";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -13,14 +19,36 @@ export const createTable = pgTableCreator((name) => `wolfwer_${name}`);
 
 export const user = createTable("user", {
   id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  username: text("username").unique().notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").notNull(),
   image: text("image"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
-  username: text("username").unique().notNull(),
-  name: text("name").notNull(),
+  lobbyHost: boolean("lobby_host").notNull().default(false),
+  lobbyId: uuid("lobby_id").references(() => lobby.id, { onDelete: "cascade" }),
 });
+
+export const lobby = createTable("lobby", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  createdAt: timestamp("created_at").notNull(),
+  code: text("code").notNull().unique(),
+  settings: text("settings").notNull(),
+});
+
+export const gameResult = createTable("game_result", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  role: text("role").notNull(),
+  isWinner: boolean("is_winner").notNull().default(false),
+  isAlive: boolean("is_alive").notNull().default(true),
+  createdAt: timestamp("created_at").notNull(),
+});
+
+/* auth schema */
 
 export const session = createTable("session", {
   id: text("id").primaryKey(),

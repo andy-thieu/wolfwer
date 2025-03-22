@@ -1,5 +1,5 @@
-import SignIn from "../_components/authentication/sign-in";
-import { SignUp } from "../_components/authentication/sign-up";
+import SignIn from "../../_components/authentication/sign-in";
+import { SignUp } from "../../_components/authentication/sign-up";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
 export default function Home() {
