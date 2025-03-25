@@ -11,7 +11,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import Link from "next/link";
-import { SubmitButton } from "./submit-button";
+import { AuthButton } from "./auth-button";
 import { useState } from "react";
 
 export default function SignIn() {
@@ -62,7 +62,7 @@ export default function SignIn() {
               />
             </div>
 
-            <SubmitButton
+            <AuthButton
               label="Anmelden"
               action="signIn"
               userData={{ username: username, password: password }}

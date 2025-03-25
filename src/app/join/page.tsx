@@ -2,9 +2,9 @@ import { CreateGameCard } from "../../components/join-lobby/create-game-card";
 import { JoinGameCard } from "../../components/join-lobby/join-game-card";
 import { auth } from "~/lib/auth";
 import { headers } from "next/headers";
-import { SignOut } from "../../components/authentication/sign-out";
 import { Info } from "lucide-react";
 import { redirect } from "next/navigation";
+import { AuthButton } from "~/components/authentication/auth-button";
 
 export default async function Page() {
   const session = await auth.api.getSession({
@@ -28,7 +28,7 @@ export default async function Page() {
           <CreateGameCard creatorId={session.user.id} />
           <JoinGameCard currentUserId={session.user.id} />
         </div>
-        <SignOut />
+        <AuthButton action="signOut" label="Abmelden" />
         <p className="mt-4 flex items-center gap-2">
           <Info /> this page is work in progress (wip)
         </p>

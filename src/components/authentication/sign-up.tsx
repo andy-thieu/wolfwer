@@ -12,7 +12,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 
 import Link from "next/link";
-import { SubmitButton } from "./submit-button";
+import { AuthButton } from "./auth-button";
 import { useState } from "react";
 
 export function SignUp() {
@@ -79,7 +79,7 @@ export function SignUp() {
               />
             </div>
 
-            <SubmitButton
+            <AuthButton
               label="Account erstellen"
               action="signUp"
               userData={{
