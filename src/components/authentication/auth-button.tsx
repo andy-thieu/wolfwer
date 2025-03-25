@@ -60,7 +60,7 @@ export function AuthButton(props: SubmitButtonProps) {
     e.preventDefault();
     if (props.action === "signIn") {
       setIsLoading(true);
-      authClient.signIn.username(
+      await authClient.signIn.username(
         {
           username: props.userData.username,
           password: props.userData.password,
@@ -85,7 +85,7 @@ export function AuthButton(props: SubmitButtonProps) {
         return;
       }
       setIsLoading(true);
-      authClient.signUp.email(
+      await authClient.signUp.email(
         {
           name: props.userData.username,
           email: props.userData.email,
@@ -109,7 +109,7 @@ export function AuthButton(props: SubmitButtonProps) {
       );
     } else {
       setIsLoading(true);
-      authClient.signOut({
+      await authClient.signOut({
         fetchOptions: {
           onSuccess: () => {
             toast.success("Erfolgreich abgemeldet");
