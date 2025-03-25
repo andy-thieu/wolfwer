@@ -1,8 +1,8 @@
-import { CreateGameCard } from "../../_components/join-lobby/create-game-card";
-import { JoinGameCard } from "../../_components/join-lobby/join-game-card";
+import { CreateGameCard } from "../../components/join-lobby/create-game-card";
+import { JoinGameCard } from "../../components/join-lobby/join-game-card";
 import { auth } from "~/lib/auth";
 import { headers } from "next/headers";
-import { SignOut } from "../../_components/authentication/sign-out";
+import { SignOut } from "../../components/authentication/sign-out";
 import { Info } from "lucide-react";
 import { redirect } from "next/navigation";
 

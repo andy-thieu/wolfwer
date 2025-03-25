@@ -6,6 +6,8 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
+import { sql } from "drizzle-orm";
+
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
  * database instance for multiple projects.
@@ -30,7 +32,10 @@ export const user = createTable("user", {
 export const lobby = createTable("lobby", {
   id: uuid("id").primaryKey().defaultRandom(),
   createdAt: timestamp("created_at").notNull(),
-  code: text("code").notNull().unique(),
+  code: text("code")
+    .notNull()
+    .unique()
+    .default(sql`upper(substring(md5(gen_random_uuid()::text) from 1 for 5))`),
   settings: text("settings").notNull(),
 });
 

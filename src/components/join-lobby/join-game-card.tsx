@@ -13,7 +13,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { joinLobby } from "~/_actions/lobby";
+import { joinLobby } from "~/server-actions/lobby";
 
 interface JoinGameCardProps {
   currentUserId: string;

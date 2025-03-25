@@ -5,7 +5,7 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Users, X } from "lucide-react";
 import { clsx } from "clsx";
-import { UserData } from "~/_actions/user";
+import { UserData } from "~/server-actions/user";
 
 interface Player {
   id: string;

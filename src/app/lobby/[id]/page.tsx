@@ -1,13 +1,15 @@
-import { PlayerList } from "~/_components/lobby/player-list";
-import { RoomCode } from "~/_components/lobby/room-code";
-import { GameSettings } from "~/_components/lobby/game-settings";
-import Header from "~/_components/lobby/header";
-import { getLobby } from "~/_actions/lobby";
+import { PlayerList } from "~/components/lobby/player-list";
+import { RoomCode } from "~/components/lobby/room-code";
+import { GameSettings } from "~/components/lobby/game-settings";
+import Header from "~/components/lobby/header";
+import { getLobby } from "~/server-actions/lobby";
 import { Info } from "lucide-react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "~/lib/auth";
-import { getUserById } from "~/_actions/user";
+import { getUserById } from "~/server-actions/user";
+import { tryCatch } from "~/lib/try-catch";
+
 interface PageProps {
   params: Promise<{
     id: string;
@@ -38,12 +40,29 @@ export default async function Page({ params }: PageProps) {
 
   if (!id) return <div>Loading...</div>;
 
-  let lobbyData;
-  let userData;
+  const { data: lobbyData, error: lobbyError } = await tryCatch(getLobby(id));
+  const { data: userData, error: userError } = await tryCatch(
+    getUserById(session.user.id),
+  );
+
+  if (lobbyError) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center text-center text-2xl">
+        <Info className="mr-4 h-6 w-6" />
+        <p>Lobby nicht gefunden</p>
+      </div>
+    );
+  }
+  if (userError) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center text-center text-2xl">
+        <Info className="mr-4 h-6 w-6" />
+        <p>Benutzer nicht gefunden</p>
+      </div>
+    );
+  }
 
   try {
-    lobbyData = await getLobby(id);
-    userData = await getUserById(session.user.id);
   } catch (e) {
     return (
       <div className="flex h-screen w-screen items-center justify-center text-center text-2xl">

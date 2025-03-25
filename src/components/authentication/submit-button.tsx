@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { LogIn } from "lucide-react";
+import { tryCatch } from "~/lib/try-catch";
 
 interface SignInUserData {
   username: string;
@@ -48,11 +49,12 @@ export function SubmitButton(props: SubmitButtonProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const signIn = async () => {
+  const handleClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
     if (props.action === "signIn") {
       setIsLoading(true);
-      try {
-        await authClient.signIn.username(
+      const result = await tryCatch(
+        authClient.signIn.username(
           {
             username: props.userData.username,
             password: props.userData.password,
@@ -70,24 +72,22 @@ export function SubmitButton(props: SubmitButtonProps) {
               setIsLoading(false);
             },
           },
-        );
-      } catch (error) {
-        console.error(error);
+        ),
+      );
+
+      if (result.error) {
+        console.error(result.error);
         toast.error("Ein Fehler ist aufgetreten");
         setIsLoading(false);
       }
-    }
-  };
-
-  const signUp = async () => {
-    if (props.action === "signUp") {
+    } else {
       if (props.userData.password !== props.userData.confirmPassword) {
         toast.error("Passwörter stimmen nicht überein");
         return;
       }
       setIsLoading(true);
-      try {
-        await authClient.signUp.email(
+      const result = await tryCatch(
+        authClient.signUp.email(
           {
             name: props.userData.username,
             email: props.userData.email,
@@ -108,21 +108,14 @@ export function SubmitButton(props: SubmitButtonProps) {
               setIsLoading(false);
             },
           },
-        );
-      } catch (error) {
-        console.error(error);
+        ),
+      );
+
+      if (result.error) {
+        console.error(result.error);
         toast.error("Ein Fehler ist aufgetreten");
         setIsLoading(false);
       }
-    }
-  };
-
-  const handleClick = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (props.action === "signIn") {
-      await signIn();
-    } else {
-      await signUp();
     }
   };
 
