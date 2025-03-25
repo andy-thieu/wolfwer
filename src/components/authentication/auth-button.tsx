@@ -129,7 +129,6 @@ export function AuthButton(props: SubmitButtonProps) {
       type="submit"
       className={clsx({
         "w-full": props.action !== "signOut",
-        "absolute right-4 top-4 w-fit p-4": props.action == "signOut",
       })}
       onClick={handleClick}
       disabled={isLoading}

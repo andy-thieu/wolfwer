@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { Info } from "lucide-react";
 import { redirect } from "next/navigation";
 import { AuthButton } from "~/components/authentication/auth-button";
+import { Button } from "~/components/ui/button";
 
 export default async function Page() {
   const session = await auth.api.getSession({
@@ -28,7 +29,6 @@ export default async function Page() {
           <CreateGameCard creatorId={session.user.id} />
           <JoinGameCard currentUserId={session.user.id} />
         </div>
-        <AuthButton action="signOut" label="Abmelden" />
         <p className="mt-4 flex items-center gap-2">
           <Info /> this page is work in progress (wip)
         </p>
