@@ -4,29 +4,22 @@ import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Users, X } from "lucide-react";
+import { clsx } from "clsx";
+import { UserData } from "~/_actions/user";
 
 interface Player {
+  id: string;
   username: string;
   lobbyHost: boolean;
 }
 
-export function PlayerList({
-  lobbyData,
-  currentUser,
-}: {
-  lobbyData: {
-    user: {
-      username: string;
-      lobbyHost: boolean;
-    };
-  }[];
-  currentUser: string;
-}) {
-  const playerNames = lobbyData.map((player) => ({
-    username: player.user.username,
-    lobbyHost: player.user.lobbyHost,
-  }));
-  const [players, setPlayers] = useState<Player[]>(playerNames);
+interface PlayerListProps {
+  userList: Player[];
+  currentUser: UserData;
+}
+
+export function PlayerList(props: PlayerListProps) {
+  const [players, setPlayers] = useState<Player[]>(props.userList);
 
   return (
     <Card className="w-full lg:w-1/3">
@@ -44,12 +37,19 @@ export function PlayerList({
               className="flex items-center justify-between rounded bg-secondary p-2"
             >
               <div className="flex items-center gap-2">
-                <p>{player.username}</p>
+                <p
+                  className={clsx({
+                    "text-blue-400": props.currentUser.id === player.id,
+                  })}
+                >
+                  {player.username}
+                </p>
                 {player.lobbyHost ? (
                   <p className="text-xs text-muted-foreground">Ersteller</p>
                 ) : null}
               </div>
-              {currentUser !== player.username ? (
+              {props.currentUser.id !== player.id &&
+              props.currentUser.lobbyHost ? (
                 <Button variant="ghost" size="icon">
                   <X className="h-4 w-4" />
                 </Button>

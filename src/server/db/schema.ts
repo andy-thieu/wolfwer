@@ -1,6 +1,3 @@
-// Example model schema from the Drizzle docs
-// https://orm.drizzle.team/docs/sql-schema-declaration
-
 import {
   pgTableCreator,
   text,
@@ -47,6 +44,19 @@ export const gameResult = createTable("game_result", {
   isAlive: boolean("is_alive").notNull().default(true),
   createdAt: timestamp("created_at").notNull(),
 });
+
+export type SelectUser = typeof user.$inferSelect;
+type InsertUser = typeof user.$inferInsert;
+
+export type SelectLobby = typeof lobby.$inferSelect;
+type InsertLobby = typeof lobby.$inferInsert;
+
+export type SelectGameResult = typeof gameResult.$inferSelect;
+type InsertGameResult = typeof gameResult.$inferInsert;
+
+export type Lobby = Pick<SelectUser, "id" | "username" | "lobbyHost"> & {
+  users: SelectUser[];
+};
 
 /* auth schema */
 

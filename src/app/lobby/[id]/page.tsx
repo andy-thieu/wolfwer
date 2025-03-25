@@ -7,6 +7,7 @@ import { Info } from "lucide-react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "~/lib/auth";
+import { getUserById } from "~/_actions/user";
 interface PageProps {
   params: Promise<{
     id: string;
@@ -37,31 +38,37 @@ export default async function Page({ params }: PageProps) {
 
   if (!id) return <div>Loading...</div>;
 
-  const lobbyData = await getLobby(id);
+  let lobbyData;
+  let userData;
 
-  if (!lobbyData[0])
+  try {
+    lobbyData = await getLobby(id);
+    userData = await getUserById(session.user.id);
+  } catch (e) {
     return (
       <div className="flex h-screen w-screen items-center justify-center text-center text-2xl">
         <Info className="mr-4 h-6 w-6" />
         <p>Lobby nicht gefunden</p>
       </div>
     );
+  }
 
-  const defaultSettings = JSON.parse(lobbyData[0].settings) as GameSettings;
+  const defaultSettings = JSON.parse(lobbyData.settings) as GameSettings;
+  const userList = lobbyData.users;
 
   return (
     <main className="container flex h-full h-screen w-full w-screen flex-col gap-4 p-4">
       <Header />
 
       <div className="flex flex-col gap-4 lg:flex-row">
-        <PlayerList
-          lobbyData={lobbyData}
-          currentUser={session.user.username ?? ""}
-        />
+        <PlayerList userList={userList} currentUser={userData} />
 
         <div className="w-full space-y-4 lg:w-2/3">
           <RoomCode roomCode={id} />
-          <GameSettings isCreator={true} defaultSettings={defaultSettings} />
+          <GameSettings
+            isCreator={userData.lobbyHost && userData.lobbyId === lobbyData.id}
+            defaultSettings={defaultSettings}
+          />
         </div>
       </div>
     </main>
