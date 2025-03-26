@@ -76,7 +76,7 @@ export default async function Page({ params }: PageProps) {
   const userList = lobbyData.users;
 
   return (
-    <main className="container flex h-full h-screen w-full w-screen flex-col gap-4 p-4">
+    <div className="flex h-screen w-screen flex-col gap-4 p-4">
       <Header />
 
       <div className="flex flex-col gap-4 lg:flex-row">
@@ -90,6 +90,6 @@ export default async function Page({ params }: PageProps) {
           />
         </div>
       </div>
-    </main>
+    </div>
   );
 }

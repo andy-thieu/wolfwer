@@ -132,6 +132,7 @@ export function AuthButton(props: SubmitButtonProps) {
       })}
       onClick={handleClick}
       disabled={isLoading}
+      variant={props.action == "signOut" ? "ghost" : "default"}
     >
       {isLoading ? (
         <Loader2 className="animate-spin" />

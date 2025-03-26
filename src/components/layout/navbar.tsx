@@ -9,15 +9,13 @@ export function Navbar() {
 
   return (
     <nav className="fixed top-0 z-50 w-full border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
+      <div className="flex h-14 w-full items-center justify-between">
         <div className="mr-4 flex">
           <Link href="/join" className="mr-6 flex items-center space-x-2">
             <span className="hidden font-bold sm:inline-block">
               wolfwer.net
             </span>
           </Link>
-        </div>
-        <div className="flex flex-1 items-center justify-between space-x-8 md:justify-end">
           <div className="flex items-center gap-8">
             <Link
               href="/join"
@@ -40,6 +38,8 @@ export function Navbar() {
               Leaderboard
             </Link>
           </div>
+        </div>
+        <div className="flex flex-1 items-center justify-between space-x-8 md:justify-end">
           <AuthButton action="signOut" label="Abmelden" />
         </div>
       </div>
