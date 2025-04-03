@@ -69,8 +69,8 @@ function Hero() {
             </h1>
 
             <p className="max-w-2xl text-center text-lg leading-relaxed tracking-tight text-muted-foreground md:text-xl">
-              Spiele mit deinen Freunden das berühmte "Werwolf"-Spiel und messe
-              dich mit denen in einer Rangliste!
+              Spiele mit deinen Freunden das berühmte &quot;Werwolf&quot;-Spiel
+              und messe dich mit denen in einer Rangliste!
             </p>
           </div>
           <div className="flex flex-row gap-3">
