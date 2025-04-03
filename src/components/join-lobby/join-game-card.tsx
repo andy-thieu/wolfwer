@@ -1,6 +1,6 @@
 "use client";
 
-import { LogIn } from "lucide-react";
+import { ArrowRightToLine } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -46,13 +46,13 @@ export function JoinGameCard(props: JoinGameCardProps) {
             <Input
               type="text"
               id="lobbyCode"
-              placeholder={'z.B. "KLXNTW"'}
               onChange={(e) => setLobbyCode(e.target.value)}
               required
             />
           </div>
           <Button type="submit" className="w-full">
-            <LogIn className="mr-2 h-4 w-4" /> Lobby beitreten
+            <span>Lobby beitreten</span>
+            <ArrowRightToLine className="ml-2 h-4 w-4" />
           </Button>
         </form>
       </CardContent>

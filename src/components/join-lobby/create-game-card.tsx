@@ -36,7 +36,8 @@ export function CreateGameCard(props: CreateGameCardProps) {
       <CardContent>
         <form className="space-y-4" onSubmit={onSubmit}>
           <Button type="submit" className="w-full">
-            <Plus className="mr-2 h-4 w-4" /> <span>Spiel erstellen</span>
+            <span>Spiel erstellen</span>
+            <Plus className="ml-2 h-4 w-4" />
           </Button>
         </form>
       </CardContent>

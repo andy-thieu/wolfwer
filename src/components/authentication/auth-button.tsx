@@ -6,7 +6,7 @@ import { authClient } from "~/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { LogIn } from "lucide-react";
+import { Check, UserRoundMinus } from "lucide-react";
 import clsx from "clsx";
 
 interface SignInUserData {
@@ -134,14 +134,14 @@ export function AuthButton(props: SubmitButtonProps) {
       disabled={isLoading}
       variant={props.action == "signOut" ? "ghost" : "default"}
     >
-      {isLoading ? (
-        <Loader2 className="animate-spin" />
-      ) : props.action !== "signOut" ? (
-        <LogIn />
-      ) : (
-        <LogOut />
-      )}
       {props.label}
+      {isLoading ? (
+        <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+      ) : props.action == "signOut" ? (
+        <UserRoundMinus className="ml-2 h-4 w-4" />
+      ) : (
+        <Check className="ml-2 h-4 w-4" />
+      )}
     </Button>
   );
 }

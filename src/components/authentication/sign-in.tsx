@@ -73,7 +73,7 @@ export default function SignIn() {
       <CardFooter>
         <div className="flex w-full justify-center border-t py-4">
           <p className="text-center text-xs text-neutral-500">
-            Gesichert mit{" "}
+            Gesichert & verschlüsselt mit{" "}
             <Link
               href="https://better-auth.com"
               className="text-orange-400 underline"
