@@ -121,8 +121,8 @@ export function GameSettings(props: GameSettingsProps) {
           <Label>Rolle bei Tod aufdecken</Label>
         </div>
         <Button className="w-full" disabled={!props.isCreator}>
-          <Check />
-          Spiel starten
+          <span>Spiel starten</span>
+          <Check className="ml-2 h-4 w-4" />
         </Button>
       </CardContent>
     </Card>

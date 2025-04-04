@@ -23,7 +23,7 @@ export const mockSettings = {
 export const mockLeaderboard = [
   {
     id: "1",
-    username: "tanja",
+    username: "devin",
     wins: 45,
     losses: 5,
     winRate: "90%",
@@ -79,7 +79,7 @@ export const mockLeaderboard = [
   },
   {
     id: "9",
-    username: "devin",
+    username: "tanja",
     wins: 18,
     losses: 8,
     winRate: "69%",
