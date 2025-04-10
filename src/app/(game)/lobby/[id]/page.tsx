@@ -2,12 +2,12 @@ import { PlayerList } from "~/components/lobby/player-list";
 import { RoomCode } from "~/components/lobby/room-code";
 import { GameSettings } from "~/components/lobby/game-settings";
 import Header from "~/components/lobby/header";
-import { getLobby } from "~/server-actions/lobby";
+import { getLobby } from "~/data/actions/lobby";
 import { Info } from "lucide-react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "~/lib/auth";
-import { getUserById } from "~/server-actions/user";
+import { getUserById } from "~/data/actions/user";
 import { tryCatch } from "~/lib/try-catch";
 
 interface PageProps {
@@ -62,16 +62,6 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  try {
-  } catch (e) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center text-center text-2xl">
-        <Info className="mr-4 h-6 w-6" />
-        <p>Lobby nicht gefunden</p>
-      </div>
-    );
-  }
-
   const defaultSettings = JSON.parse(lobbyData.settings) as GameSettings;
   const userList = lobbyData.users;
 
@@ -80,7 +70,11 @@ export default async function Page({ params }: PageProps) {
       <Header />
 
       <div className="flex flex-col gap-4 lg:flex-row">
-        <PlayerList userList={userList} currentUser={userData} />
+        <PlayerList
+          userList={userList}
+          currentUser={userData}
+          lobbyId={lobbyData.id}
+        />
 
         <div className="w-full space-y-4 lg:w-2/3">
           <RoomCode roomCode={id} />

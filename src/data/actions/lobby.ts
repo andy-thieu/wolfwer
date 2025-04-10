@@ -5,6 +5,17 @@ import { lobby, user } from "~/server/db/schema";
 
 import { eq } from "drizzle-orm";
 import { mockSettings } from "~/lib/mock-data";
+import { env } from "~/env";
+
+import Pusher from "pusher";
+
+const pusher = new Pusher({
+  appId: env.PUSHER_APP_ID,
+  key: env.NEXT_PUBLIC_PUSHER_APP_KEY,
+  secret: env.PUSHER_APP_SECRET,
+  cluster: env.NEXT_PUBLIC_PUSHER_CLUSTER,
+  useTLS: true,
+});
 
 const createDefaultLobbyData = {
   settings: JSON.stringify(mockSettings),
@@ -68,8 +79,23 @@ export const joinLobby = async (code: string, userId: string) => {
     throw new Error("Lobby not found");
   }
 
-  await db
+  const userData = await db
     .update(user)
     .set({ lobbyId: lobbyData.id, lobbyHost: false })
-    .where(eq(user.id, userId));
+    .where(eq(user.id, userId))
+    .returning({
+      id: user.id,
+      username: user.username,
+      lobbyHost: user.lobbyHost,
+    });
+
+  try {
+    await pusher.trigger(`lobby-${lobbyData.id}`, "new-user", {
+      userData: userData[0],
+    });
+  } catch (error) {
+    console.error("Failed to trigger Pusher event:", error);
+  }
+
+  return userData[0];
 };

@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { createLobby } from "~/server-actions/lobby";
+import { createLobby } from "~/data/actions/lobby";
 import { redirect } from "next/navigation";
 
 interface CreateGameCardProps {

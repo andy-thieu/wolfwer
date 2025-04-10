@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Users, X } from "lucide-react";
 import { clsx } from "clsx";
-import { UserData } from "~/server-actions/user";
+import { UserData } from "~/data/actions/user";
+import { pusherClient } from "~/lib/pusher-client";
 
 interface Player {
   id: string;
@@ -16,10 +17,41 @@ interface Player {
 interface PlayerListProps {
   userList: Player[];
   currentUser: UserData;
+  lobbyId: string;
+}
+
+interface PusherNewUserEvent {
+  userData: Player;
+}
+
+interface PusherRemoveUserEvent {
+  userId: string;
 }
 
 export function PlayerList(props: PlayerListProps) {
   const [players, setPlayers] = useState<Player[]>(props.userList);
+
+  useEffect(() => {
+    const channel = pusherClient.subscribe(`lobby-${props.lobbyId}`);
+
+    channel.bind("new-user", (data: PusherNewUserEvent) => {
+      if (data.userData) {
+        setPlayers((prev) => {
+          const playerExists = prev.some((p) => p.id === data.userData.id);
+          if (playerExists) return prev;
+          return [...prev, data.userData];
+        });
+      }
+    });
+
+    channel.bind("remove-user", (data: PusherRemoveUserEvent) => {
+      setPlayers((prev) => prev.filter((player) => player.id !== data.userId));
+    });
+
+    return () => {
+      pusherClient.unsubscribe(`lobby-${props.lobbyId}`);
+    };
+  }, [props.lobbyId]);
 
   return (
     <Card className="w-full lg:w-1/3">

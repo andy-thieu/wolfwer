@@ -3,10 +3,10 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { MoveRight, UserRoundCheck } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { useRouter } from "next/navigation";
+import { unstable_ViewTransition as ViewTransition } from "react";
+import Link from "next/link";
 
 function Hero() {
-  const router = useRouter();
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
     () => [
@@ -42,9 +42,11 @@ function Hero() {
             </Button>
           </div>
           <div className="flex flex-col gap-6">
-            <h1 className="font-regular flex max-w-2xl flex-col gap-6 text-center text-5xl tracking-tighter md:text-7xl">
-              <span className="text-spektr-cyan-50">wolfwer.net</span>
-              <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
+            <div className="font-regular flex max-w-2xl flex-col gap-6 text-center text-5xl tracking-tighter md:text-7xl">
+              <ViewTransition name={"logo"}>
+                <h1 className="text-spektr-cyan-50">wolfwer.net</h1>
+              </ViewTransition>
+              <h1 className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
                 &nbsp;
                 {titles.map((title, index) => (
                   <motion.span
@@ -67,8 +69,8 @@ function Hero() {
                     {title}
                   </motion.span>
                 ))}
-              </span>
-            </h1>
+              </h1>
+            </div>
 
             <p className="max-w-2xl text-center text-lg leading-relaxed tracking-tight text-muted-foreground md:text-xl">
               Spiele mit deinen Freunden das berühmte &quot;Werwolf&quot;-Spiel
@@ -76,21 +78,16 @@ function Hero() {
             </p>
           </div>
           <div className="flex flex-row flex-wrap items-center justify-center gap-3">
-            <Button
-              size="lg"
-              className="gap-4"
-              variant="outline"
-              onClick={() => router.push("/login")}
-            >
-              Anmelden <UserRoundCheck className="h-4 w-4" />
-            </Button>
-            <Button
-              size="lg"
-              className="gap-4"
-              onClick={() => router.push("/login")}
-            >
-              Kostenlos Registrieren <MoveRight className="h-4 w-4" />
-            </Button>
+            <Link href="/login?method=sign-in">
+              <Button size="lg" className="gap-4" variant="outline">
+                Anmelden <UserRoundCheck className="h-4 w-4" />
+              </Button>
+            </Link>
+            <Link href="/login?method=sign-up">
+              <Button size="lg" className="gap-4">
+                Kostenlos Registrieren <MoveRight className="h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
