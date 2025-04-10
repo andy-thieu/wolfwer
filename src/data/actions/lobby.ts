@@ -99,3 +99,25 @@ export const joinLobby = async (code: string, userId: string) => {
 
   return userData[0];
 };
+
+export const leaveLobby = async (userId: string, lobbyId: string) => {
+  const userData = await db
+    .update(user)
+    .set({ lobbyId: null, lobbyHost: false })
+    .where(eq(user.id, userId))
+    .returning({
+      id: user.id,
+      username: user.username,
+      lobbyHost: user.lobbyHost,
+    });
+
+  try {
+    await pusher.trigger(`lobby-${lobbyId}`, "remove-user", {
+      userId: userId,
+    });
+  } catch (error) {
+    console.error("Failed to trigger Pusher event:", error);
+  }
+  console.log("userData", userData);
+  return userData[0];
+};

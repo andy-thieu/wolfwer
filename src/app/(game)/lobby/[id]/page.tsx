@@ -67,7 +67,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div className="flex h-screen w-screen flex-col gap-4 p-4">
-      <Header />
+      <Header lobbyId={lobbyData.id} userId={userData.id} />
 
       <div className="flex flex-col gap-4 lg:flex-row">
         <PlayerList
