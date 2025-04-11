@@ -22,7 +22,7 @@ export function RoomCode(props: RoomCodeProps) {
       <CardContent>
         <div className="flex items-center justify-between rounded bg-secondary p-3">
           <span className="text-2xl font-bold">{props.roomCode}</span>
-          <Button variant="outline" size="icon" onClick={copyRoomCode}>
+          <Button variant="neutral" size="icon" onClick={copyRoomCode}>
             <Copy className="h-4 w-4" />
           </Button>
         </div>

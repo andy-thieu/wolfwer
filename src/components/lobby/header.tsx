@@ -24,7 +24,7 @@ const Header = (props: HeaderProps) => {
         <CardTitle>wolfwer Lobby</CardTitle>
       </CardHeader>
       <CardContent className="flex items-center p-0 pr-4">
-        <Button variant="outline" onClick={leave}>
+        <Button variant="neutral" onClick={leave}>
           <span>Lobby verlassen</span>
           <LogOut className="ml-2 h-4 w-4" />
         </Button>

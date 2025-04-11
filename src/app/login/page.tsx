@@ -15,7 +15,7 @@ export default function Login() {
   const loginMethodParam = searchParams.get("method");
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center gap-16 px-4">
+    <div className="flex h-screen w-screen flex-col items-center justify-center gap-16 bg-[linear-gradient(to_right,#80808033_1px,transparent_1px),linear-gradient(to_bottom,#80808033_1px,transparent_1px)] bg-[size:70px_70px] px-4">
       <div className="flex flex-col items-center gap-6">
         <Link href="/">
           <ViewTransition name={"logo"}>

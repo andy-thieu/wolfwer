@@ -132,7 +132,7 @@ export function AuthButton(props: SubmitButtonProps) {
       })}
       onClick={handleClick}
       disabled={isLoading}
-      variant={props.action == "signOut" ? "ghost" : "default"}
+      variant={props.action == "signOut" ? "neutral" : "default"}
     >
       {props.label}
       {isLoading ? (

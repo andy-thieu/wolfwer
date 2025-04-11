@@ -28,7 +28,7 @@ export function CreateGameCard(props: CreateGameCardProps) {
   };
 
   return (
-    <Card>
+    <Card className="min-w-[400px]">
       <CardHeader>
         <CardTitle>Neue Lobby erstellen</CardTitle>
         <CardDescription>Starte ein neues Wolfwer-Spiel</CardDescription>

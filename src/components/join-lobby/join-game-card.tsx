@@ -32,7 +32,7 @@ export function JoinGameCard(props: JoinGameCardProps) {
   };
 
   return (
-    <Card>
+    <Card className="min-w-[300px]">
       <CardHeader>
         <CardTitle>Spiel beitreten</CardTitle>
         <CardDescription>

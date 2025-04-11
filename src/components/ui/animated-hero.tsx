@@ -37,7 +37,7 @@ function Hero() {
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center gap-8 py-20 lg:py-40">
           <div>
-            <Button variant="secondary" size="sm" className="gap-4">
+            <Button variant="neutral" size="sm" className="gap-4">
               Erfahre mehr über das Projekt <MoveRight className="h-4 w-4" />
             </Button>
           </div>
@@ -79,7 +79,7 @@ function Hero() {
           </div>
           <div className="flex flex-row flex-wrap items-center justify-center gap-3">
             <Link href="/login?method=sign-in">
-              <Button size="lg" className="gap-4" variant="outline">
+              <Button size="lg" className="gap-4" variant="neutral">
                 Anmelden <UserRoundCheck className="h-4 w-4" />
               </Button>
             </Link>

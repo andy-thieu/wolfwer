@@ -69,7 +69,7 @@ export function GameSettings(props: GameSettingsProps) {
               <div key={role.name} className="flex flex-row items-center gap-4">
                 <div className="flex flex-row items-center space-x-4">
                   <Button
-                    variant="outline"
+                    variant="neutral"
                     size="icon"
                     onClick={() => updateRoleCount(index, role.count - 1)}
                     disabled={!props.isCreator}
@@ -80,7 +80,7 @@ export function GameSettings(props: GameSettingsProps) {
                     {role.count}
                   </span>
                   <Button
-                    variant="outline"
+                    variant="neutral"
                     size="icon"
                     onClick={() => updateRoleCount(index, role.count + 1)}
                     disabled={!props.isCreator}

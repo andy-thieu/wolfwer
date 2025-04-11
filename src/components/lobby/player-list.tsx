@@ -82,7 +82,7 @@ export function PlayerList(props: PlayerListProps) {
               </div>
               {props.currentUser.id !== player.id &&
               props.currentUser.lobbyHost ? (
-                <Button variant="ghost" size="icon">
+                <Button variant="neutral" size="icon">
                   <X className="h-4 w-4" />
                 </Button>
               ) : null}
