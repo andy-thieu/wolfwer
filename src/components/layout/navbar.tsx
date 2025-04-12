@@ -12,10 +12,8 @@ export function Navbar() {
     <Card className="shadow-shadow-nav fixed top-0 left-1/2 z-50 m-2 w-full max-w-[80%] -translate-x-1/2 rounded-none border-[3px] bg-[rgb(253,224,71)] p-4 py-2">
       <div className="flex h-14 w-full items-center justify-between">
         <div className="mr-4 flex">
-          <Link href="/" className="mr-10">
-            <span className="hidden font-medium sm:inline-block">
-              wolfwer.net
-            </span>
+          <Link href="/" className="mr-10 hidden sm:inline-block">
+            <span className="font-medium">wolfwer.net</span>
           </Link>
           <div className="flex items-center gap-8">
             <Link
@@ -40,9 +38,7 @@ export function Navbar() {
             </Link>
           </div>
         </div>
-        <div className="flex flex-1 items-center justify-between space-x-8 md:justify-end">
-          <AuthButton action="signOut" label="Abmelden" />
-        </div>
+        <AuthButton action="signOut" label="Abmelden" />
       </div>
     </Card>
   );
