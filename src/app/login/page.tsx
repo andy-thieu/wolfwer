@@ -30,8 +30,12 @@ export default function Login() {
         className="w-full max-w-md"
       >
         <TabsList>
-          <TabsTrigger value="sign-in">Anmelden</TabsTrigger>
-          <TabsTrigger value="sign-up">Registrieren</TabsTrigger>
+          <TabsTrigger value="sign-in" className="hover:cursor-pointer">
+            Anmelden
+          </TabsTrigger>
+          <TabsTrigger value="sign-up" className="hover:cursor-pointer">
+            Registrieren
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="sign-in">
           <SignIn />

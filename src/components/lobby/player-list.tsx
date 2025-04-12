@@ -3,10 +3,13 @@
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Users, X } from "lucide-react";
+import { Crown, LogOut, Users, X } from "lucide-react";
 import { clsx } from "clsx";
 import { UserData } from "~/data/actions/user";
 import { pusherClient } from "~/lib/pusher-client";
+import { redirect } from "next/navigation";
+
+import { leaveLobby } from "~/data/actions/lobby";
 
 interface Player {
   id: string;
@@ -31,6 +34,12 @@ interface PusherRemoveUserEvent {
 export function PlayerList(props: PlayerListProps) {
   const [players, setPlayers] = useState<Player[]>(props.userList);
 
+  const leave = async () => {
+    console.log("leave");
+    await leaveLobby(props.currentUser.id, props.lobbyId);
+    redirect("/join");
+  };
+
   useEffect(() => {
     const channel = pusherClient.subscribe(`lobby-${props.lobbyId}`);
 
@@ -54,39 +63,42 @@ export function PlayerList(props: PlayerListProps) {
   }, [props.lobbyId]);
 
   return (
-    <Card className="w-full lg:w-1/3">
-      <CardHeader>
+    <Card className="w-full p-4 lg:w-1/3">
+      <CardHeader className="p-0">
         <CardTitle className="flex items-center justify-between">
           <span>Spieler ({players.length}/10)</span>
-          <Users className="h-5 w-5" />
+          <Button variant="neutral" onClick={leave}>
+            <span>Lobby verlassen</span>
+            <LogOut className="ml-2 h-4 w-4" />
+          </Button>
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         <ul className="space-y-2">
           {players.map((player, index) => (
-            <li
+            <Card
               key={index}
-              className="flex items-center justify-between rounded bg-secondary p-2"
+              className="flex flex-row items-center justify-between rounded bg-white p-2"
             >
               <div className="flex items-center gap-2">
                 <p
                   className={clsx({
-                    "text-blue-400": props.currentUser.id === player.id,
+                    "text-green-700": props.currentUser.id === player.id,
                   })}
                 >
                   {player.username}
                 </p>
                 {player.lobbyHost ? (
-                  <p className="text-xs text-muted-foreground">Ersteller</p>
+                  <Crown className="h-4 w-4 text-yellow-500" />
                 ) : null}
               </div>
               {props.currentUser.id !== player.id &&
               props.currentUser.lobbyHost ? (
-                <Button variant="neutral" size="icon">
+                <Button variant="neutral" className="h-8 w-8" size="icon">
                   <X className="h-4 w-4" />
                 </Button>
               ) : null}
-            </li>
+            </Card>
           ))}
         </ul>
       </CardContent>

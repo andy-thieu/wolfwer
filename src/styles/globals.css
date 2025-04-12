@@ -12,7 +12,8 @@
   --border: oklch(0% 0 0);
   --ring: oklch(0% 0 0);
   --overlay: oklch(0% 0 0 / 0.8);
-  --shadow: 4px 4px 0px 0px var(--border);
+  --shadow: 2px 2px 0px 0px var(--border);
+  --shadow-nav: 8px 8px 0px 0px var(--border);
 }
 
 .dark {
@@ -23,7 +24,7 @@
   --main: oklch(71.47% 0.129261 180.4742);
   --border: oklch(0% 0 0);
   --ring: oklch(100% 0 0);
-  --shadow: 4px 4px 0px 0px var(--border);
+  --shadow: 2px 2px 0px 0px var(--border);
 }
 
 @theme inline {
@@ -42,6 +43,7 @@
   --spacing-reverseBoxShadowY: -4px;
   --radius-base: 5px;
   --shadow-shadow: var(--shadow);
+  --shadow-shadow-nav: var(--shadow-nav);
   --font-weight-base: 500;
   --font-weight-heading: 700;
 }

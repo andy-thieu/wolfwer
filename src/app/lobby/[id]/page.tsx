@@ -1,7 +1,6 @@
 import { PlayerList } from "~/components/lobby/player-list";
 import { RoomCode } from "~/components/lobby/room-code";
 import { GameSettings } from "~/components/lobby/game-settings";
-import Header from "~/components/lobby/header";
 import { getLobby } from "~/data/actions/lobby";
 import { Info } from "lucide-react";
 import { headers } from "next/headers";
@@ -66,10 +65,8 @@ export default async function Page({ params }: PageProps) {
   const userList = lobbyData.users;
 
   return (
-    <div className="flex h-screen w-screen flex-col gap-4 p-4">
-      <Header lobbyId={lobbyData.id} userId={userData.id} />
-
-      <div className="flex flex-col gap-4 lg:flex-row">
+    <div className="flex h-screen w-screen flex-col items-center gap-4 bg-[linear-gradient(to_right,#80808033_1px,transparent_1px),linear-gradient(to_bottom,#80808033_1px,transparent_1px)] bg-[size:70px_70px] p-4">
+      <div className="flex w-full max-w-[90%] flex-col gap-4 lg:flex-row">
         <PlayerList
           userList={userList}
           currentUser={userData}

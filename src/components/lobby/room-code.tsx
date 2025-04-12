@@ -11,16 +11,13 @@ interface RoomCodeProps {
 export function RoomCode(props: RoomCodeProps) {
   const copyRoomCode = async () => {
     await navigator.clipboard.writeText(props.roomCode);
-    toast.success("Raumcode wurde kopiert!");
+    toast.success("Raumcode kopiert!");
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Raumcode</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex items-center justify-between rounded bg-secondary p-3">
+    <Card className="p-3">
+      <CardContent className="p-0">
+        <div className="bg-secondary flex items-center justify-between rounded">
           <span className="text-2xl font-bold">{props.roomCode}</span>
           <Button variant="neutral" size="icon" onClick={copyRoomCode}>
             <Copy className="h-4 w-4" />
