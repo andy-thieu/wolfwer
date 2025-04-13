@@ -1,8 +1,13 @@
 import "~/styles/globals.css";
-import { GeistSans } from "geist/font/sans";
+import { Space_Grotesk } from "next/font/google";
 import { type Metadata } from "next";
 import { Suspense } from "react";
 import { Toaster } from "~/components/ui/sonner";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "wolfwer.net",
@@ -14,7 +19,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en" className={spaceGrotesk.className}>
       <body>
         <main>
           <Suspense fallback={<div>Seite wird geladen...</div>}>

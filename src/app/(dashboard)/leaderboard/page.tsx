@@ -33,12 +33,12 @@ export default function LeaderboardPage() {
   };
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center p-4">
+    <div className="flex h-screen w-screen items-center justify-center bg-[linear-gradient(to_right,#80808033_1px,transparent_1px),linear-gradient(to_bottom,#80808033_1px,transparent_1px)] bg-[size:70px_70px] p-4">
       <Card className="md:w-[600px] lg:w-[700px] xl:w-[800px]">
         <CardHeader>
           <CardTitle className="flex items-center gap-4">
             <Crown className="h-6 w-6 text-yellow-500" />
-            wolfwer Rangliste
+            wolfwer Leaderboard
           </CardTitle>
         </CardHeader>
         <CardContent>
