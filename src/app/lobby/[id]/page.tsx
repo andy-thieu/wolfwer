@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { auth } from "~/lib/auth";
 import { getUserById } from "~/data/actions/user";
 import { tryCatch } from "~/lib/try-catch";
+import { Role } from "~/lib/mock-data";
 
 interface PageProps {
   params: Promise<{
@@ -16,12 +17,7 @@ interface PageProps {
 }
 
 interface GameSettings {
-  roles: {
-    name: string;
-    description: string;
-    count: number;
-    maxCount: number;
-  }[];
+  roles: Role[];
   seerCanSeeRole: string;
   revealRoleOnDeath: boolean;
 }
@@ -61,7 +57,7 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  const defaultSettings = JSON.parse(lobbyData.settings);
+  const defaultSettings = JSON.parse(lobbyData.settings) as GameSettings;
   const userList = lobbyData.users;
 
   return (
