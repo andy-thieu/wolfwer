@@ -13,6 +13,7 @@ function Hero() {
       "🧙 Hexe",
       "🔮 Seher",
       "🙆‍♀️ Dorfbewohner",
+      "👔 Bürgermeister",
       "🐺 Werwolf",
       "💕 Amor",
       "🪽 Beschützer",
@@ -46,7 +47,7 @@ function Hero() {
               <ViewTransition name={"logo"}>
                 <h1 className="text-spektr-cyan-50">wolfwer.net</h1>
               </ViewTransition>
-              <h1 className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
+              <h1 className="relative flex w-full justify-center overflow-hidden text-center md:pt-1 md:pb-4">
                 &nbsp;
                 {titles.map((title, index) => (
                   <motion.span
@@ -72,7 +73,7 @@ function Hero() {
               </h1>
             </div>
 
-            <p className="max-w-2xl text-center text-lg leading-relaxed tracking-tight text-muted-foreground md:text-xl">
+            <p className="text-muted-foreground max-w-2xl text-center text-lg leading-relaxed tracking-tight md:text-xl">
               Spiele mit deinen Freunden das berühmte &quot;Werwolf&quot;-Spiel
               und messe dich mit denen in einer Rangliste!
             </p>

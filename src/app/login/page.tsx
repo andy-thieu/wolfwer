@@ -29,7 +29,7 @@ export default function Login() {
         defaultValue={loginMethodParam === "sign-in" ? "sign-in" : "sign-up"}
         className="w-full max-w-md"
       >
-        <TabsList>
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="sign-in" className="hover:cursor-pointer">
             Anmelden
           </TabsTrigger>

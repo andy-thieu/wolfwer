@@ -61,7 +61,7 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  const defaultSettings = JSON.parse(lobbyData.settings) as GameSettings;
+  const defaultSettings = JSON.parse(lobbyData.settings);
   const userList = lobbyData.users;
 
   return (

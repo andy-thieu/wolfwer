@@ -26,7 +26,9 @@ export const user = createTable("user", {
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
   lobbyHost: boolean("lobby_host").notNull().default(false),
-  lobbyId: uuid("lobby_id").references(() => lobby.id, { onDelete: "set null" }),
+  lobbyId: uuid("lobby_id").references(() => lobby.id, {
+    onDelete: "set null",
+  }),
 });
 
 export const lobby = createTable("lobby", {

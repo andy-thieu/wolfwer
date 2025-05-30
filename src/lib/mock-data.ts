@@ -1,17 +1,19 @@
-export const mockRoles = [
-  { name: "werewolf", description: "Werwölfe", count: 0, maxCount: 2 },
-  { name: "villager", description: "Dorfbewohner", count: 0, maxCount: 4 },
-  { name: "seer", description: "Seherin", count: 0, maxCount: 1 },
-  { name: "witch", description: "Hexe", count: 0, maxCount: 1 },
-  { name: "hunter", description: "Jäger", count: 0, maxCount: 1 },
-  { name: "lover", description: "Amor", count: 0, maxCount: 1 },
-  { name: "protector", description: "Beschützer", count: 0, maxCount: 1 },
-  {
-    name: "mayor",
-    description: "Bürgermeister",
-    count: 0,
-    maxCount: 1,
-  },
+export interface Role {
+  name: string;
+  title: string;
+  emoji: string;
+  count?: number;
+  enabled?: boolean;
+}
+
+export const mockRoles: Role[] = [
+  { name: "werewolf", title: "Werwölfe", emoji: "🐺", count: 0 },
+  { name: "seer", title: "Seherin", emoji: "🔮", enabled: false },
+  { name: "witch", title: "Hexe", emoji: "🧙", enabled: false },
+  { name: "hunter", title: "Jäger", emoji: "🔫", enabled: false },
+  { name: "lover", title: "Amor", emoji: "💕", enabled: false },
+  { name: "protector", title: "Beschützer", emoji: "🪽", enabled: false },
+  { name: "mayor", title: "Bürgermeister", emoji: "👔", enabled: true },
 ];
 
 export const mockSettings = {

@@ -15,12 +15,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-interface Role {
-  name: string;
-  description: string;
-  count: number;
-  maxCount: number;
-}
+import { Role } from "~/lib/mock-data";
 
 interface GameSettingsProps {
   isCreator: boolean;
@@ -33,25 +28,45 @@ interface GameSettingsProps {
 
 export function GameSettings(props: GameSettingsProps) {
   const [roles, setRoles] = useState(props.defaultSettings.roles);
+  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+  const [werewolfCount, setWerewolfCount] = useState(1);
   const [canSeerSeeRole, setCanSeerSeeRole] = useState(
     props.defaultSettings.seerCanSeeRole,
   );
 
   const canSeerSeeRoleOptions = [
-    { value: "alignment", label: "Nur Gesinnung (Gut/Böse)" },
-    { value: "role", label: "Genaue Rolle" },
+    { value: true, label: "Genaue Rolle" },
+    { value: false, label: "Nur Gesinnung (Gut/Böse)" },
   ] as const;
 
   const [revealRoleOnDeath, setRevealRoleOnDeath] = useState(
     props.defaultSettings.revealRoleOnDeath,
   );
 
-  const updateRoleCount = (index: number, newCount: number) => {
-    if (roles[index] && newCount > roles[index].maxCount) return;
-    if (newCount < 0) return;
-    setRoles((prevRoles: Role[]) =>
-      prevRoles.map((role, i) =>
-        i === index ? { ...role, count: newCount } : role,
+  const toggleRole = (roleName: string) => {
+    setSelectedRoles((prev) =>
+      prev.includes(roleName)
+        ? prev.filter((name) => name !== roleName)
+        : [...prev, roleName],
+    );
+  };
+
+  const updateWerewolfCount = (increment: boolean) => {
+    setWerewolfCount((prev) => {
+      const newCount = increment ? prev + 1 : prev - 1;
+      return Math.max(1, newCount);
+    });
+    setRoles((prev) =>
+      prev.map((role) =>
+        role.name === "werewolf"
+          ? {
+              ...role,
+              count: Math.max(
+                1,
+                increment ? werewolfCount + 1 : werewolfCount - 1,
+              ),
+            }
+          : role,
       ),
     );
   };
@@ -65,30 +80,40 @@ export function GameSettings(props: GameSettingsProps) {
         <div className="space-y-4">
           <Label>Rollen</Label>
           <div className="grid grid-cols-2 gap-2">
-            {roles.map((role: Role, index: number) => (
-              <div key={role.name} className="flex flex-row items-center gap-4">
-                <div className="flex flex-row items-center space-x-4">
-                  <Button
-                    variant="neutral"
-                    size="icon"
-                    onClick={() => updateRoleCount(index, role.count - 1)}
-                    disabled={!props.isCreator}
-                  >
-                    -
-                  </Button>
-                  <span className="flex w-[20px] items-center justify-center text-lg">
-                    {role.count}
-                  </span>
-                  <Button
-                    variant="neutral"
-                    size="icon"
-                    onClick={() => updateRoleCount(index, role.count + 1)}
-                    disabled={!props.isCreator}
-                  >
-                    +
-                  </Button>
-                </div>
-                <Label>{role.description}</Label>
+            {roles.map((role: Role) => (
+              <div key={role.name} className="flex flex-1">
+                <Button
+                  className={`flex h-10 w-1/2 justify-between ${role.name === "werewolf" ? "pointer-events-none" : ""}`}
+                  variant={
+                    selectedRoles.includes(role.name) ? "default" : "neutral"
+                  }
+                  onClick={() => toggleRole(role.name)}
+                  disabled={!props.isCreator}
+                >
+                  <span className="mr-2">{role.emoji}</span>
+                  {role.title}
+                </Button>
+                {role.name === "werewolf" && (
+                  <div className="ml-2 flex items-center">
+                    <Button
+                      onClick={() => updateWerewolfCount(false)}
+                      disabled={!props.isCreator || werewolfCount <= 1}
+                      variant="neutral"
+                      size="sm"
+                    >
+                      -
+                    </Button>
+                    <span className="mx-6">{werewolfCount}</span>
+                    <Button
+                      onClick={() => updateWerewolfCount(true)}
+                      disabled={!props.isCreator}
+                      variant="neutral"
+                      size="sm"
+                    >
+                      +
+                    </Button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -96,16 +121,19 @@ export function GameSettings(props: GameSettingsProps) {
         <div className="space-y-2">
           <Label htmlFor="seerSeeRole">Seherin sieht</Label>
           <Select
-            value={canSeerSeeRole ? "role" : "alignment"}
-            onValueChange={setCanSeerSeeRole}
+            value={canSeerSeeRole.toString()}
+            onValueChange={(value) => setCanSeerSeeRole(value)}
             disabled={!props.isCreator}
           >
             <SelectTrigger>
               <SelectValue placeholder="Wähle eine Option" />
             </SelectTrigger>
-            <SelectContent defaultValue={canSeerSeeRoleOptions[0].value}>
+            <SelectContent>
               {canSeerSeeRoleOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
+                <SelectItem
+                  key={option.value.toString()}
+                  value={option.value.toString()}
+                >
                   {option.label}
                 </SelectItem>
               ))}
